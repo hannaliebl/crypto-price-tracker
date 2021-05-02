@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { getBtcData } from "../api/coinbase";
 import { closingPriceData } from "../api/coinbaseFormatter";
 
+import type { HistoricalPriceData } from "../api/coinbaseFormatter";
+
 function HistoricalPriceChart() {
-  const [historicalPrice, setHistoricalData] = useState<number[] | null>(null);
+  const [historicalPrice, setHistoricalData] = useState<
+    HistoricalPriceData[] | null
+  >(null);
   useEffect(() => {
     const fetchHistoricalData = async () => {
       try {
@@ -19,8 +23,13 @@ function HistoricalPriceChart() {
   }, []);
   return (
     <div>
-      {historicalPrice?.map((closePrice, i) => {
-        return <div key={i}> {closePrice}</div>;
+      {historicalPrice?.map((closePriceData, i) => {
+        return (
+          <div key={i}>
+            {" "}
+            {closePriceData.date}: {closePriceData.closing}
+          </div>
+        );
       })}
     </div>
   );

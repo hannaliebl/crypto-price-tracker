@@ -1,8 +1,13 @@
 import type { coinbaseHistoricalData } from "./coinbase";
 
-export async function closingPriceData(apiRes: Promise<coinbaseHistoricalData>): Promise<number[]> {
+export type HistoricalPriceData = {
+  closing: number,
+  date: number
+}
+
+export async function closingPriceData(apiRes: Promise<coinbaseHistoricalData>): Promise<HistoricalPriceData[]> {
   const data = await apiRes;
   return data.map((dayData) => {
-    return dayData[4]
+    return { closing: dayData[4], date: dayData[0] }
   })
 }
